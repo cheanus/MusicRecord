@@ -47,7 +47,7 @@ def update_doc(playlist_name: str, playlist_id: str):
         return
     playlist_doc = ""
     for track in playlist_data:
-        track_name = track["name"] + "_" + track["ar"][0].get("name", "Unknown")
+        track_name = track["name"] + "-" + track["ar"][0].get("name", "Unknown")
         track_id = track["id"]
         # sanitize track_name for filesystem usage
         safe_name = _sanitize_filename(track_name)
@@ -78,7 +78,7 @@ def update_doc(playlist_name: str, playlist_id: str):
     logging.info(f"Updated playlist document: {target_path}")
 
 
-def _sanitize_filename(name: str, replace: str = "_") -> str:
+def _sanitize_filename(name: str, replace: str = "-") -> str:
     """Return a filesystem-safe filename by replacing unsafe characters.
 
     Keeps unicode characters but strips path separators and control characters.
