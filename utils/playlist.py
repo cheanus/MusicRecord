@@ -47,15 +47,16 @@ def update_doc(playlist_name: str, playlist_id: str):
         return
     playlist_doc = ""
     for track in playlist_data:
-        track_name = track["name"]
+        track_name = track["name"] + "_" + track["ar"][0].get("name", "Unknown")
         track_id = track["id"]
         # sanitize track_name for filesystem usage
         safe_name = _sanitize_filename(track_name)
-        review_path = os.path.join("doc", "review", f"{safe_name}-{track_id}.md")
+        review_name = f"{safe_name}-{track_id}.md"
+        review_path = os.path.join("doc", "review", review_name)
         if os.path.exists(review_path):
-            playlist_doc += f"- [{track_name}](https://music.163.com/#/song?id={track_id}) 【[评论](../review/{safe_name}-{track_id}.md)】\n"
+            playlist_doc += f"- [{track_name}](https://music.163.com/#/song?id={track_id}) 【[评论](../review/f{review_name})】\n"
         else:
-            playlist_doc += f"- [{track_name}](https://music.163.com/#/song?id={track_id}) <!--【[评论](../review/{safe_name}-{track_id}.md)】 -->\n"
+            playlist_doc += f"- [{track_name}](https://music.163.com/#/song?id={track_id}) <!--【[评论](../review/f{review_name})】 -->\n"
 
     # Write to file
     playlist_dir = os.path.join("doc", "playlist")
